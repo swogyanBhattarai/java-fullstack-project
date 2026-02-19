@@ -26,8 +26,6 @@ The project is built using **Spring Boot** and currently implements basic CRUD f
 | JDBC Connections with SQLite             | ⏳ In Progress | Connecting Spring Boot to SQLite and mapping ResultSet → entities |
 | JPA / ORM Integration                    | 🔮 Next     | Plan to replace JDBC with JPA for easier database handling |
 | JWT Authentication & Password Hashing   | 🔮 Future   | Secure API endpoints with authentication |
-| Fullstack integration with React / Next.js | 🔮 Future   | Connect frontend to backend APIs |
-| Production-ready Spring Boot practices  | 🔮 Future   | Error handling, DTOs, clean architecture, connection pooling |
 
 ---
 
