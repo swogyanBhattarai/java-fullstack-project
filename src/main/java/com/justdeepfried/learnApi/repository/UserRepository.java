@@ -19,7 +19,6 @@ public class UserRepository  {
 
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
-            System.out.println("Database Connected!");
 
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM users");
             ResultSet rs = ps.executeQuery();
@@ -28,6 +27,7 @@ public class UserRepository  {
                 UserEntity user = new UserEntity();
                 user.setAge(rs.getInt("age"));
                 user.setName(rs.getString("name"));
+                user.setId(rs.getInt("id"));
                 users.add(user);
             }
             rs.close();
@@ -44,15 +44,19 @@ public class UserRepository  {
 
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
-            System.out.println("Database Connected!");
 
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            rs.next();
 
-            user.setName(rs.getString("name"));
-            user.setAge(rs.getInt("age"));
+            if (rs.next()) {
+                user.setAge(rs.getInt("age"));
+                user.setName(rs.getString("name"));
+                user.setId(rs.getInt("id"));
+            } else {
+                System.out.printf("No user found with id: %d", id);
+                return null;
+            }
 
             rs.close();
             ps.close();
@@ -63,12 +67,66 @@ public class UserRepository  {
         }
     }
 
+    public void addUser(UserEntity user) {
+        try {
+            Connection conn = DriverManager.getConnection(url, username, password);
+
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO users (name, age) VALUES (?, ?)");
+            ps.setString(1, user.getName());
+            ps.setInt(2, user.getAge());
+
+            ps.executeUpdate();
+            conn.close();
+            ps.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void updateUser(int id, UserEntity updateUser) {
+
+        try {
+            Connection conn = DriverManager.getConnection(url, username, password);
+            PreparedStatement getUser = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
+            getUser.setInt(1, id);
+            ResultSet rs = getUser.executeQuery();
+
+            if (rs.next()) {
+                PreparedStatement update = conn.prepareStatement("UPDATE users SET name = ?, age = ? WHERE id = ?");
+                update.setString(1, updateUser.getName());
+                update.setInt(2, updateUser.getAge());
+                update.setInt(3, id);
+                update.executeUpdate();
+            } else {
+                System.out.println("No user with id: " + id);
+            }
+            rs.close();
+            getUser.close();
+            conn.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void deleteUser (int id) {
+        try {
+            Connection conn = DriverManager.getConnection(url, username, password);
+            PreparedStatement deleteStmt = conn.prepareStatement("DELETE FROM users WHERE id = ?");
+            deleteStmt.setInt(1, id);
+            deleteStmt.executeUpdate();
+            deleteStmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
     public void createIfNotCreated() {
         String sql = """
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
-            password TEXT NOT NULL
+            name TEXT NOT NULL,
+            age INTEGER NOT NULL
         )
     """;
 
