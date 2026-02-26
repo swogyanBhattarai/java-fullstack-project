@@ -27,8 +27,7 @@ public class UserController {
 
     @PostMapping
     public void addUser(@RequestBody UserEntity userEntity){
-        userEntity.setId(nextId++);
-        Users.add(userEntity);
+        userService.addUser(userEntity);
     }
 
     @GetMapping("/{idd}")
@@ -38,21 +37,14 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public UserEntity updateUserById(@PathVariable int id, @RequestBody UserEntity updateEntity) {
-        UserEntity update = null;
-        try {
-            update = Users.stream()
-                        .filter(s -> s.getId() == id)
-                        .findFirst()
-                        .orElseThrow(NullPointerException::new);
-        } catch (NullPointerException e) {
-            throw new RuntimeException(e);
-        }
+    public void updateUserById(@PathVariable int id, @RequestBody UserEntity updateEntity) {
+       userService.createIfNotCreated();
+       userService.updateUser(id, updateEntity);
+    }
 
-        update.setName(updateEntity.getName());
-        update.setAge(updateEntity.getAge());
-
-        return update;
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable int id) {
+        userService.deleteUser(id);
     }
 
 }

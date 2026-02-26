@@ -23,6 +23,18 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public void addUser(UserEntity user) {
+        userRepository.addUser(user);
+    }
+
+    public void updateUser(int id, UserEntity updatedUser) {
+        userRepository.updateUser(id, updatedUser);
+    }
+
+    public void deleteUser(int id) {
+        userRepository.deleteUser(id);
+    }
+
     public void createIfNotCreated() {
         userRepository.createIfNotCreated();
     }
