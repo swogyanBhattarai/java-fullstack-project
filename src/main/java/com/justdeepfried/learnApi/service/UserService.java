@@ -1,7 +1,9 @@
 package com.justdeepfried.learnApi.service;
 
-import com.justdeepfried.learnApi.entity.UserEntity;
+import com.justdeepfried.learnApi.model.UserModel;
+import com.justdeepfried.learnApi.repository.UserDbRepository;
 import com.justdeepfried.learnApi.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,34 +11,40 @@ import java.util.List;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
+//    private final UserRepository userRepository;
+//
+//    public UserService(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    @Autowired
+    UserDbRepository repo;
+
+    public List<UserModel> getAll() {
+        return repo.findAll();
     }
 
-    public List<UserEntity> getAll() {
-        return userRepository.findAll();
+    public UserModel findById(int id) {
+        return repo.findById(id).orElse(new UserModel());
     }
 
-    public UserEntity findById(int id) {
-        return userRepository.findById(id);
+    public void addUser(UserModel user) {
+        repo.save(user);
     }
 
-    public void addUser(UserEntity user) {
-        userRepository.addUser(user);
-    }
-
-    public void updateUser(int id, UserEntity updatedUser) {
-        userRepository.updateUser(id, updatedUser);
+    public void updateUser(int id, UserModel updatedUser) {
+        UserModel existing = repo.findById(id).orElseThrow(()-> new RuntimeException("User not found!"));
+        existing.setAge(updatedUser.getAge());
+        existing.setName(updatedUser.getName());
+        repo.save(existing);
     }
 
     public void deleteUser(int id) {
-        userRepository.deleteUser(id);
+        repo.deleteById(id);
     }
 
-    public void createIfNotCreated() {
-        userRepository.createIfNotCreated();
-    }
+//    public void createIfNotCreated() {
+//        userRepository.createIfNotCreated();
+//    }
 
 }

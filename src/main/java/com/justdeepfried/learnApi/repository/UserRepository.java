@@ -1,21 +1,20 @@
 package com.justdeepfried.learnApi.repository;
 
-import com.justdeepfried.learnApi.entity.UserEntity;
+import com.justdeepfried.learnApi.model.UserModel;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
 public class UserRepository  {
     private final String url = "jdbc:sqlite:./application.db";
     private final String username = "";
     private final String password = "";
 
 
-    public List<UserEntity> findAll() {
-        List<UserEntity> users = new ArrayList<>();
+    public List<UserModel> findAll() {
+        List<UserModel> users = new ArrayList<>();
 
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
@@ -24,7 +23,7 @@ public class UserRepository  {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                UserEntity user = new UserEntity();
+                UserModel user = new UserModel();
                 user.setAge(rs.getInt("age"));
                 user.setName(rs.getString("name"));
                 user.setId(rs.getInt("id"));
@@ -39,8 +38,8 @@ public class UserRepository  {
         }
     }
 
-    public UserEntity findById(int id) {
-        UserEntity user = new UserEntity();
+    public UserModel findById(int id) {
+        UserModel user = new UserModel();
 
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
@@ -67,7 +66,7 @@ public class UserRepository  {
         }
     }
 
-    public void addUser(UserEntity user) {
+    public void addUser(UserModel user) {
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
 
@@ -83,7 +82,7 @@ public class UserRepository  {
         }
     }
 
-    public void updateUser(int id, UserEntity updateUser) {
+    public void updateUser(int id, UserModel updateUser) {
 
         try {
             Connection conn = DriverManager.getConnection(url, username, password);

@@ -1,8 +1,20 @@
-package com.justdeepfried.learnApi.entity;
+package com.justdeepfried.learnApi.model;
 
-public class UserEntity {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import org.springframework.stereotype.Component;
+
+@Component
+@Entity
+public class UserModel {
+
+    @Id
+    @GeneratedValue
     private int id;
+
     private String name;
+
     private int age;
 
     public int getId() {
