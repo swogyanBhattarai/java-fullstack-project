@@ -24,9 +24,9 @@ The project is built using **Spring Boot** and currently implements basic CRUD f
 | Java Basics: variables, classes, loops, collections | ✅ Completed   | Learned core Java concepts |
 | Spring Boot Basics: Dependency Injection, Beans, API creation | ✅ Completed   | Created controllers, services, repositories |
 | In-memory CRUD API testing               | ✅ Completed   | Tested endpoints with local variables |
-| JDBC Connections with SQLite             | ✅ Completed | Connecting Spring Boot to SQLite and mapping ResultSet → entities |
-| JPA / ORM Integration                    | ⏳ In Progress | Plan to replace JDBC with JPA for easier database handling |
-| JWT Authentication & Password Hashing   | 🔮 Next       | Secure API endpoints with authentication |
+| JDBC Connections with SQLite             | ✅ Completed   | Connecting Spring Boot to SQLite and mapping ResultSet → entities |
+| JPA / ORM Integration                    | ✅ Completed   | Plan to replace JDBC with JPA for easier database handling |
+| JWT Authentication & Password Hashing   | ⏳ In Progress | Secure API endpoints with authentication |
 
 ---
 
