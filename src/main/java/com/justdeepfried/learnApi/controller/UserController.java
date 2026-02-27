@@ -2,6 +2,8 @@ package com.justdeepfried.learnApi.controller;
 
 import com.justdeepfried.learnApi.model.UserModel;
 import com.justdeepfried.learnApi.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,16 @@ public class UserController {
     @GetMapping
     public List<UserModel> getAllUsers() {
         return userService.getAll();
+    }
+
+    @GetMapping("/session")
+    public String getSessionID(HttpServletRequest request) {
+        return "Current Session ID: " + request.getSession().getId();
+    }
+
+    @GetMapping("/csrf")
+    public CsrfToken getCsrfToken(HttpServletRequest request) {
+        return (CsrfToken) request.getAttribute("_csrf");
     }
 
     @PostMapping
