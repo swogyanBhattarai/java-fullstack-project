@@ -3,11 +3,13 @@
 ## Overview
 This is a personal learning project where I am building my understanding of **Java from the ground up**, gradually moving toward creating a fullstack web application.  
 
-The project is built using **Spring Boot** and currently implements basic CRUD functionality for a `User` entity. Initially, endpoints were tested using local in-memory storage, the project is done migrating to a **SQLite persistent database** for real-world data handling and currently moving towards JPA / ORM Integration.
+The project is built using **Spring Boot**.
 
 ---
 
 ## API Endpoints
+
+### User Endpoints
 
 - **GET `/user`** – Returns a list of all users.
 - **POST `/user`** – Adds a new user to the system.
@@ -16,18 +18,21 @@ The project is built using **Spring Boot** and currently implements basic CRUD f
 - **DELETE `/user/{id}`** - Deletes a user's information by ID.
 
 ---
+### Transaction Endpoints
 
+- **POST `/transaction/{id}`** - Adds a new transaction. ID specifies which user to add it to.
+---
 ## Learning Progress
 
-| Topic                                   | Status        | Notes |
-|-----------------------------------------|---------------|-------|
-| Java Basics: variables, classes, loops, collections | ✅ Completed   | Learned core Java concepts |
-| Spring Boot Basics: Dependency Injection, Beans, API creation | ✅ Completed   | Created controllers, services, repositories |
-| In-memory CRUD API testing               | ✅ Completed   | Tested endpoints with local variables |
+| Topic                                   | Status        | Notes                                                             |
+|-----------------------------------------|---------------|-------------------------------------------------------------------|
+| Java Basics: variables, classes, loops, collections | ✅ Completed   | Learned core Java concepts                                        |
+| Spring Boot Basics: Dependency Injection, Beans, API creation | ✅ Completed   | Created controllers, services, repositories                       |
+| In-memory CRUD API testing               | ✅ Completed   | Tested endpoints with local variables                             |
 | JDBC Connections with SQLite             | ✅ Completed   | Connecting Spring Boot to SQLite and mapping ResultSet → entities |
-| JPA / ORM Integration                    | ✅ Completed   | Plan to replace JDBC with JPA for easier database handling |
-| JWT Authentication & Password Hashing   | ⏳ In Progress | Secure API endpoints with authentication |
-
+| JPA / ORM Integration                    | ✅ Completed   | Plan to replace JDBC with JPA for easier database handling        |
+ Secure database access using custom UserDetailsService   | ⏳ In Progress | Ensure only registered users can access database                  |
+| JWT Authentication & Password Hashing   | 🔮 Next       | Secure API endpoints with authentication                          |
 ---
 
 ## How to Run the Project
