@@ -14,8 +14,12 @@ public class CustomUserDetailService implements UserDetailsService {
     // A custom UserDetailsService is required to authenticate the users for database access.
     // Take username and password from db using loadUserByUsername.
     // This custom UserDetailService is injected into the SecurityConfig so that it gets called instead of the default UserDetailService
-    @Autowired
+
     private UserDbRepository userRepo;
+
+    public CustomUserDetailService(UserDbRepository userRepo) {
+        this.userRepo = userRepo;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -19,6 +19,7 @@ public class TransactionService {
     public void addTransaction(TransactionModel transactionModel, int id) {
         UserModel user = users.findById(id).orElse(new UserModel());
         transactionModel.setUser(user);
+        transactionModel.setActive(true);
         transactions.save(transactionModel);
     }
 }

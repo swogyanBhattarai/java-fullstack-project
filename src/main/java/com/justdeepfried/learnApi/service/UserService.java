@@ -1,9 +1,8 @@
 package com.justdeepfried.learnApi.service;
 
-import com.justdeepfried.learnApi.model.TransactionModel;
 import com.justdeepfried.learnApi.model.UserModel;
 import com.justdeepfried.learnApi.repository.UserDbRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,14 +10,13 @@ import java.util.List;
 @Service
 public class UserService {
 
-//    private final UserRepository userRepository;
-//
-//    public UserService(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
+    private final UserDbRepository repo;
 
-    @Autowired
-    UserDbRepository repo;
+    public UserService(UserDbRepository repo) {
+        this.repo = repo;
+    }
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public List<UserModel> getAll() {
         return repo.findAll();
@@ -29,6 +27,7 @@ public class UserService {
     }
 
     public void addUser(UserModel user) {
+        user.setPassword(encoder.encode(user.getPassword()));
         repo.save(user);
     }
 
