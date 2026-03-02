@@ -23,6 +23,11 @@ public class UserController {
         return userService.getAll();
     }
 
+    @PostMapping("/login")
+    public String verify(@RequestBody UserModel user) {
+        return userService.verify(user);
+    }
+
     @GetMapping("/session")
     public String getSessionID(HttpServletRequest request) {
         return "Current Session ID: " + request.getSession().getId();

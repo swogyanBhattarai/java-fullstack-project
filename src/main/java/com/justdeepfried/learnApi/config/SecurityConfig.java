@@ -3,9 +3,12 @@ package com.justdeepfried.learnApi.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -31,7 +34,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http.csrf(csrf -> csrf.disable()) // Disable cross site request forgery but make session stateless. Any API except GET does not work when enabling csrf.
-                .authorizeHttpRequests(req -> req.anyRequest().authenticated())
+                .authorizeHttpRequests(req -> req
+                        .requestMatchers(HttpMethod.POST, "/user").permitAll() // Allows adding user without being authenticated.
+                        .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Each reload changes the session id.
 
@@ -45,6 +50,13 @@ public class SecurityConfig {
         return provider;
     }
 
-    // Custom AuthenticationProvider was created to setPasswordEncoder as NoOpPasswordEncoder.getInstance()
+    // Custom AuthenticationProvider was created to setPasswordEncoder
     // DaoAuthenticationProvider is the authenticationProvider that ensure database authentication
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) {
+        return config.getAuthenticationManager();
+    }
+    // Makes the AuthenticationManager available for injection elsewhere, would not have been possible without making a bean and leaving it as a default implementation. Injected in UserService for verify() function.
+    // AuthenticationManager calls AuthenticationProvider
 }
