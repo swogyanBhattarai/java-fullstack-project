@@ -5,6 +5,7 @@ import com.justdeepfried.learnApi.service.TransactionService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/transaction")
 public class TransactionController {
 
