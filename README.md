@@ -22,19 +22,21 @@ The project is built using **Spring Boot**.
 ### Transaction Endpoints
 
 - **POST `/transaction/{id}`** - Adds a new transaction. ID specifies which user to add it to.
+- **GET `/transaction/{id}`** - Gets a transaction by ID. Used to test Exception Handling.
 ---
 ## Learning Progress
 
-| Topic                                                         | Status        | Notes                                                             |
-|---------------------------------------------------------------|---------------|-------------------------------------------------------------------|
-| Java Basics: variables, classes, loops, collections           | ✅ Completed   | Learned core Java concepts                                        |
-| Spring Boot Basics: Dependency Injection, Beans, API creation | ✅ Completed   | Created controllers, services, repositories                       |
-| In-memory CRUD API testing                                    | ✅ Completed   | Tested endpoints with local variables                             |
-| JDBC Connections with SQLite                                  | ✅ Completed   | Connecting Spring Boot to SQLite and mapping ResultSet → entities |
-| JPA / ORM Integration                                         | ✅ Completed   | Plan to replace JDBC with JPA for easier database handling        |
- Secure database access using custom UserDetailsService        | ✅ Completed   | Ensure only registered users can access database                  |
-| JWT Authentication & Password Hashing                         | ✅ Completed   | Secure API endpoints with authentication                          |
-| Validation & Error Handling                                   | ⏳ In Progress | Secure API endpoints with proper validation and error handling                 
+| Topic                                                         | Status        | Notes                                                                    |
+|---------------------------------------------------------------|---------------|--------------------------------------------------------------------------|
+| Java Basics: variables, classes, loops, collections           | ✅ Completed   | Learned core Java concepts                                               |
+| Spring Boot Basics: Dependency Injection, Beans, API creation | ✅ Completed   | Created controllers, services, repositories                              |
+| In-memory CRUD API testing                                    | ✅ Completed   | Tested endpoints with local variables                                    |
+| JDBC Connections with SQLite                                  | ✅ Completed   | Connecting Spring Boot to SQLite and mapping ResultSet → entities        |
+| JPA / ORM Integration                                         | ✅ Completed   | Replace JDBC with JPA for easier database handling                       |
+ Secure database access using custom UserDetailsService        | ✅ Completed   | Ensure only registered users can access database                         |
+| JWT Authentication & Password Hashing                         | ✅ Completed   | Secure API endpoints with authentication                                 |
+| Validation & Error Handling                                   | ⏳ In Progress | Secure API endpoints with proper validation and error handling           
+| Role Based Access                                             | 🔮 Next       | Enable users to access different levels of content using role separation 
 ---
 
 ## How to Run the Project

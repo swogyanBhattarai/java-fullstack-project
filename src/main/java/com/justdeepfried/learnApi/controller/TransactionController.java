@@ -20,4 +20,9 @@ public class TransactionController {
         transactionService.addTransaction(transaction, id);
     }
 
+    @GetMapping("/{id}")
+    public TransactionModel getById(@PathVariable long id) {
+        return transactionService.getById(id);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.justdeepfried.learnApi.service;
 
+import com.justdeepfried.learnApi.exception.TransactionNotFoundException;
 import com.justdeepfried.learnApi.model.TransactionModel;
 import com.justdeepfried.learnApi.model.UserModel;
 import com.justdeepfried.learnApi.repository.TransactionRepository;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class TransactionService {
 
     @Autowired
-    TransactionRepository transactions;
+    TransactionRepository repo;
 
     @Autowired
     UserDbRepository users;
@@ -20,6 +21,10 @@ public class TransactionService {
         UserModel user = users.findById(id).orElse(new UserModel());
         transactionModel.setUser(user);
         transactionModel.setActive(true);
-        transactions.save(transactionModel);
+        repo.save(transactionModel);
+    }
+
+    public TransactionModel getById(long id) {
+        return repo.findById((int) id).orElseThrow(() -> new TransactionNotFoundException("Transaction with id: " + id + " not found!"));
     }
 }

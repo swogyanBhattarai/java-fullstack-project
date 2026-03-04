@@ -1,5 +1,6 @@
 package com.justdeepfried.learnApi.service;
 
+import com.justdeepfried.learnApi.exception.UserNotFoundException;
 import com.justdeepfried.learnApi.model.UserModel;
 import com.justdeepfried.learnApi.repository.UserDbRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,7 +32,7 @@ public class UserService {
     }
 
     public UserModel findById(int id) {
-        return repo.findById(id).orElse(new UserModel());
+        return repo.findById(id).orElseThrow(() -> new UserNotFoundException("User with id: " + id + " not found!"));
     }
 
     public void addUser(UserModel user) {
@@ -40,13 +41,16 @@ public class UserService {
     }
 
     public void updateUser(int id, UserModel updatedUser) {
-        UserModel existing = repo.findById(id).orElseThrow(()-> new RuntimeException("User not found!"));
+        UserModel existing = repo.findById(id).orElseThrow(() -> new UserNotFoundException("User with id: " + id + " not found!"));
         existing.setUsername(updatedUser.getUsername());
         existing.setPassword(updatedUser.getPassword());
         repo.save(existing);
     }
 
     public void deleteUser(int id) {
+        if (!repo.existsById(id)) {
+            throw new UserNotFoundException("User with id: " + id + " not found!");
+        }
         repo.deleteById(id);
     }
 
