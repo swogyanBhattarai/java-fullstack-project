@@ -3,6 +3,7 @@ package com.justdeepfried.learnApi.controller;
 import com.justdeepfried.learnApi.model.UserModel;
 import com.justdeepfried.learnApi.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String verify(@RequestBody UserModel user) {
+    public String verify(@RequestBody @Valid UserModel user) {
         return userService.verify(user);
     }
 
@@ -40,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping
-    public void addUser(@RequestBody UserModel userModel){
+    public void addUser(@RequestBody @Valid UserModel userModel){
         userService.addUser(userModel);
     }
 

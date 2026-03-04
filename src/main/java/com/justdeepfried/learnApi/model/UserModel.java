@@ -1,6 +1,9 @@
 package com.justdeepfried.learnApi.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,8 +19,12 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank(message = "Username cannot be empty")
+    @Size(min = 3, message = "Username cannot be less than 3 letters")
     private String username;
 
+    @NotBlank(message = "Password cannot be empty")
+    @Size(min = 8, message = "Password cannot be less than 8 letters")
     private String password;
 
     @CreatedDate
