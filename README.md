@@ -35,8 +35,11 @@ The project is built using **Spring Boot**.
 | JPA / ORM Integration                                         | ✅ Completed   | Replace JDBC with JPA for easier database handling                       |
  Secure database access using custom UserDetailsService        | ✅ Completed   | Ensure only registered users can access database                         |
 | JWT Authentication & Password Hashing                         | ✅ Completed   | Secure API endpoints with authentication                                 |
-| Validation & Error Handling                                   | ⏳ In Progress | Secure API endpoints with proper validation and error handling           
-| Role Based Access                                             | 🔮 Next       | Enable users to access different levels of content using role separation 
+| Validation & Error Handling                                   | ✅ Completed   | Secure API endpoints with proper validation and error handling           
+| Role Based Access                                             | ✅ Completed   | Enable users to access different levels of content using role separation 
+| Proper DTO structuring for both API Request and Response      | ⏳ In Progress | Create proper DTOs to prevent exposing the database entity 
+| Implement MapStruct for proper DTO to Entity mapping          | 🔮 Next       | Make use of MapStruct to make mapping DTOs to Entities easier 
+
 ---
 
 ## How to Run the Project
