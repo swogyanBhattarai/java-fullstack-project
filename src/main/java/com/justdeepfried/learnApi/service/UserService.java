@@ -3,9 +3,10 @@ package com.justdeepfried.learnApi.service;
 import com.justdeepfried.learnApi.exception.UserNotFoundException;
 import com.justdeepfried.learnApi.model.UserModel;
 import com.justdeepfried.learnApi.repository.UserDbRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,8 @@ public class UserService {
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public List<UserModel> getAll() {
-        return repo.findAll();
+    public List<UserModel> getAll(Pageable pageable) {
+        return repo.findAll(pageable).getContent();
     }
 
     public UserModel findById(int id) {

@@ -3,6 +3,9 @@ package com.justdeepfried.learnApi.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +19,16 @@ public class JWTService {
 
     byte[] secretKey = "supersecretkeythatisusedforpasswordencryption".getBytes();
 
+    @Autowired
+    private ApplicationContext context;
+
     public String generateToken(String username) {
+
+        UserDetails user = context.getBean(CustomUserDetailService.class).loadUserByUsername(username);
+        List<String> roles = user.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList();
+        claims.put("roles", roles);
 
         return Jwts.builder()
                 .claims()

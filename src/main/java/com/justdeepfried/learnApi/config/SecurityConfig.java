@@ -40,7 +40,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable()) // Disable cross site request forgery but make session stateless. Any API except GET does not work when enabling csrf.
                 .authorizeHttpRequests(req -> req
                         .requestMatchers(HttpMethod.POST, "/user/**").permitAll() // Allows adding user without being authenticated.
-                        .anyRequest().authenticated())
+                        .anyRequest().hasRole("ADMIN"))
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Each reload changes the session id.
