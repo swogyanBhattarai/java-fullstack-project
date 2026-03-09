@@ -20,7 +20,7 @@ public class TransactionService {
     public void addTransaction(TransactionModel transactionModel, int id) {
         UserModel user = users.findById(id).orElse(new UserModel());
         transactionModel.setUser(user);
-        transactionModel.setActive(true);
+        transactionModel.setIsActive(true);
         repo.save(transactionModel);
     }
 

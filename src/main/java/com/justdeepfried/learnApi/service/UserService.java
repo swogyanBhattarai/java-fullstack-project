@@ -1,17 +1,22 @@
 package com.justdeepfried.learnApi.service;
 
+import com.justdeepfried.learnApi.dto.PageResponse;
+import com.justdeepfried.learnApi.dto.UserResponse;
 import com.justdeepfried.learnApi.exception.UserNotFoundException;
 import com.justdeepfried.learnApi.model.UserModel;
 import com.justdeepfried.learnApi.repository.UserDbRepository;
+import com.justdeepfried.learnApi.specification.UserSpecification;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserService {
@@ -28,8 +33,10 @@ public class UserService {
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public List<UserModel> getAll(Pageable pageable) {
-        return repo.findAll(pageable).getContent();
+    public PageResponse<UserResponse> getAllSearch(Pageable pageable, String search) {
+        Specification<UserModel> specification = UserSpecification.getSpecification(search);
+        Page<UserResponse> page = repo.findAll(specification, pageable).map(UserResponse::from);
+        return PageResponse.from(page);
     }
 
     public UserModel findById(int id) {
@@ -67,4 +74,8 @@ public class UserService {
         return "Failure";
     }
 
+    public PageResponse<UserResponse> getAll(Pageable pageable) {
+        Page<UserResponse> page = repo.findAll(pageable).map(UserResponse::from);
+        return PageResponse.from(page);
+    }
 }

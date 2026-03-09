@@ -1,5 +1,7 @@
 package com.justdeepfried.learnApi.controller;
 
+import com.justdeepfried.learnApi.dto.PageResponse;
+import com.justdeepfried.learnApi.dto.UserResponse;
 import com.justdeepfried.learnApi.model.UserModel;
 import com.justdeepfried.learnApi.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,8 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -23,10 +23,11 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserModel> getAllUsers(@RequestParam(required = false, defaultValue = "1") int pageNumber,
-                                       @RequestParam(required = false, defaultValue = "5") int pageSize,
-                                       @RequestParam(required = false, defaultValue = "id") String sortBy,
-                                       @RequestParam(required = false, defaultValue = "ASC") String sortDir) {
+    public PageResponse<UserResponse> getAllUsers(@RequestParam(required = false, defaultValue = "1") int pageNumber,
+                                                  @RequestParam(required = false, defaultValue = "5") int pageSize,
+                                                  @RequestParam(required = false, defaultValue = "id") String sortBy,
+                                                  @RequestParam(required = false, defaultValue = "ASC") String sortDir,
+                                                  @RequestParam(required = false) String search) {
         Sort sort = null;
         if (sortDir.equalsIgnoreCase("ASC")) {
             sort = Sort.by(sortBy).ascending();
@@ -34,7 +35,12 @@ public class UserController {
         else {
             sort = Sort.by(sortBy).descending();
         }
-        return userService.getAll(PageRequest.of(pageNumber - 1, pageSize, sort));
+        if (search != null) {
+            return userService.getAllSearch(PageRequest.of(pageNumber - 1, pageSize, sort), search);
+        } else {
+            return userService.getAll(PageRequest.of(pageNumber - 1, pageSize, sort));
+        }
+
     }
 
     @PostMapping("/login")
