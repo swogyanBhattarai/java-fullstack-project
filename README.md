@@ -37,8 +37,9 @@ The project is built using **Spring Boot**.
 | JWT Authentication & Password Hashing                         | ✅ Completed   | Secure API endpoints with authentication                                 |
 | Validation & Error Handling                                   | ✅ Completed   | Secure API endpoints with proper validation and error handling           
 | Role Based Access                                             | ✅ Completed   | Enable users to access different levels of content using role separation 
-| Proper DTO structuring for both API Request and Response      | ⏳ In Progress | Create proper DTOs to prevent exposing the database entity 
-| Implement MapStruct for proper DTO to Entity mapping          | 🔮 Next       | Make use of MapStruct to make mapping DTOs to Entities easier 
+| Proper DTO structuring for both API Request and Response      | ✅ Completed   | Create proper DTOs to prevent exposing the database entity 
+| Implement SLF4J for proper logging                            | ✅ Completed   | Make use of SLF4J to log errors and updates in a log file 
+| Implement Swagger to document APIs and provide useable UI     | ⏳ In Progress | Enable users to use APIs through a minimal frontend 
 
 ---
 
